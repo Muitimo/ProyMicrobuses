@@ -1,0 +1,10 @@
+
+
+git clone "direccionDelProyectoEnElRepocitorio"
+
+git add "nameFile.extencion"
+
+git commit –m “Message to go with the commit here”
+
+git push  origin master
+
