@@ -1,12 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-        <!-- page content -->
+
+<!-- page content -->
         <div class="right_col" role="main">
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Registro de nuevo punto de Control</h3>
+                <h3>Formulario de Asignaciones de Buses y Chofer </h3>
               </div>
 
               <div class="title_right">
@@ -26,7 +27,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Datos del nuevo punto de control</h2>
+                    <h2>Datos</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -46,42 +47,44 @@
                   </div>
                   <div class="x_content">
 
-                    <form class="form-horizontal form-label-left" novalidate>
-                      
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Identificador </label>
-                        <div class="col-md-4 col-sm-4 col-xs-12">
-                          <input type="text" class="form-control" disabled="disabled" value="{{$n+1}}">
-                        </div>
-                      </div>
-
+                    <form class="form-horizontal form-label-left" novalidate method="POST" action="guardarAsignacion">
+                      @csrf
                       <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Nombre del Punto de Control <span class="required">*</span>
-                        </label>
-                        <div class="col-md-4 col-sm-4 col-xs-12">
-                          <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="3" data-validate-words="2" name="name" required="required" type="text">
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Longitud <span class="required">*</span> </label>
-                        <div class="col-md-4 col-sm-4 col-xs-12">
-                          <input type="text" class="form-control" disabled="disabled" placeholder="Disabled Input">
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Latitud <span class="required">*</span> </label>
-                        <div class="col-md-4 col-sm-4 col-xs-12">
-                          <input type="text" class="form-control" disabled="disabled" placeholder="Disabled Input">
-                        </div>
-                      </div>
-
-                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea"> Indique la Ubicacion <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Inicio">Fecha Inicio <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <textarea id="textarea" required="required" name="textarea" class="form-control col-md-7 col-xs-12"> Aquí irá un mapa </textarea>
+                          <input type="date" id="Inicio" name="Inicio" required="required" value="now()" data-validate-length-range="8,20" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+
+                      <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fin">Fecha fin </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="date" id="fin" name="fin" data-validate-length-range="8,20" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Interno  <span class="required">*</span> </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <select class="form-control" id="interno" required="required" name="interno">
+                            <option value="">--Interno del Bus--</option>
+                            @foreach($Microbuses as $Microbus)
+                                <option value="{{ $Microbus->id }}"> {{ $Microbus->interno }} </option>
+                            @endforeach
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Chofer  <span class="required">*</span> </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <select class="form-control" id="chofer" required="required" name="chofer">
+                            <option value="">--Elija un chofer--</option>
+                            @foreach($Personas as $Persona)
+                                <option value="{{ $Persona->id }}"> {{ $Persona->nombre }} </option>
+                            @endforeach
+                          </select>
                         </div>
                       </div>
 

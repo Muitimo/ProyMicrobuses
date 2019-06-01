@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Turnos;
 use App\Choferes;
-use App\Microbuses;
 use App\Personas;
 use Illuminate\Http\Request;
 
-class Asignaciones_Bus_Chofer extends Controller
+
+class RolDePartidas extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,16 +16,9 @@ class Asignaciones_Bus_Chofer extends Controller
      */
     public function index()
     {
-        $Microbus = Microbuses::all();
-        $Chofer_Bus = Choferes::all();
+        $listaTurno = Turnos::all();
         $Persona = Personas::all();
-        return view('Buses/Buses_Choferes', ["Microbuses" => $Microbus, "Personas" => $Persona, "Ch_Bs" => $Chofer_Bus]);
-    }
-
-    public function create()  {
-        $Microbus = Microbuses::all();
-        $Persona = Personas::all();
-        return view('Buses/AsignarChofer', ["Microbuses" => $Microbus, "Personas" => $Persona]);        
+        return view('turnos/rolDePartidas', ["listaTurnos" => $listaTurno, "Personas" => $Persona]);
     }
 
     /**
@@ -33,17 +27,19 @@ class Asignaciones_Bus_Chofer extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {        
-        $Chofer_Bus = new Choferes();
+    public function store($id)
+    {
+        $rolDePartida = new Turnos();
+        $idf = (int)substr($id, 1, count($id)-2);
+        $chof = Choferes::findOrFail(Choferes::where('id_chofer', '=', $idf)->value('id'));
 
-        $Chofer_Bus->fechaInicio = $request->input('Inicio');
-        $Chofer_Bus->fechaFin = $request->input('fin');
-        $Chofer_Bus->id_chofer = $request->input('chofer');
-        $Chofer_Bus->id_interno = $request->input('interno');
-        $Chofer_Bus->save();
-        //dd($request->all());
-        return redirect('listaAsignacines');
+        $rolDePartida->fecha = date('Y-m-d');
+        $rolDePartida->id_interno = $chof->id_interno;
+        $rolDePartida->id_chofer = $chof->id_chofer;
+        $rolDePartida->save();
+        
+        //dd($rolDePartida);
+        return redirect('reporteAsistencias');
     }
 
     /**

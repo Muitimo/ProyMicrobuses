@@ -1,12 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Choferes;
-use App\Microbuses;
-use App\Personas;
+use App\Puntos_de_controles;
 use Illuminate\Http\Request;
 
-class Asignaciones_Bus_Chofer extends Controller
+class GestionarPuntos_de_controles extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,16 +13,13 @@ class Asignaciones_Bus_Chofer extends Controller
      */
     public function index()
     {
-        $Microbus = Microbuses::all();
-        $Chofer_Bus = Choferes::all();
-        $Persona = Personas::all();
-        return view('Buses/Buses_Choferes', ["Microbuses" => $Microbus, "Personas" => $Persona, "Ch_Bs" => $Chofer_Bus]);
+        $pControl = Puntos_de_controles::all();
+        return view('cargos/listaCargos', ["Cargos" => $pControl]);
     }
 
     public function create()  {
-        $Microbus = Microbuses::all();
-        $Persona = Personas::all();
-        return view('Buses/AsignarChofer', ["Microbuses" => $Microbus, "Personas" => $Persona]);        
+        $m = count(Puntos_de_controles::all());
+        return view('puntos de control/create', ["n"=>$m]);        
     }
 
     /**
@@ -34,16 +29,8 @@ class Asignaciones_Bus_Chofer extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {        
-        $Chofer_Bus = new Choferes();
-
-        $Chofer_Bus->fechaInicio = $request->input('Inicio');
-        $Chofer_Bus->fechaFin = $request->input('fin');
-        $Chofer_Bus->id_chofer = $request->input('chofer');
-        $Chofer_Bus->id_interno = $request->input('interno');
-        $Chofer_Bus->save();
-        //dd($request->all());
-        return redirect('listaAsignacines');
+    {
+        //
     }
 
     /**

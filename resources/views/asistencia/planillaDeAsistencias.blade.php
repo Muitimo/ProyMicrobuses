@@ -7,7 +7,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Choferes Asignados a Buses</h3>
+                <h3>Planilla de Asistencia</h3>
               </div>
 
               <!-- Buscador -->
@@ -30,7 +30,7 @@
                 <div class="x_panel">
 
                   <div class="x_title">
-                    <button type="submit" class="btn btn-success"> <a href="Asig_Bus=Chofer"> Registrar nueva Asignacion </a> </button>
+                    <button type="submit" class="btn btn-success"> <a href="marcarEntrada"> Marca mueva Assitencia </a> </button>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -59,10 +59,10 @@
                           <tr class="headings">
                               <th> <input type="checkbox" id="check-all" class="flat"> </th>
 
-                              <th>Interno</th>
-                              <th>Nombre Chofer </th>  
-                              <th>Fecha Inicio</th>
-                              <th>Fecha Fin</th>
+                              <th>Fecha</th>
+                              <th>Hora de Ingreso</th>  
+                              <th>Hora de Salida</th>
+                              <th>Persona</th>
 
                               <th class="column-title no-link last"><span class="nobr">Action</span> </th>
                               <th class="bulk-actions" colspan="7">
@@ -71,24 +71,20 @@
                           </tr>
                         </thead>
 
-                        <tbody>                           
-                          @foreach($Ch_Bs as $Ch_B) <!-- Chofer/Bus -->
+                        <tbody> <!-- datos de la tabla -->                          
+                          @foreach($listaAsistencia as $listAsistencia)
                             <tr class="even pointer">
                               <td class="a-center "> <input type="checkbox" class="flat" name="table_records"> </td>
 
-                              <td >{{ $Ch_B->id_interno }}</td> 
-                              @foreach($Personas as $Persona) 
-                                @if (  $Persona->id == $Ch_B->id_chofer )
+                              <td >{{ $listAsistencia->fecha }}</td>
+                              <td >{{ $listAsistencia->horaIngreso }}</td>
+                              <td >{{ $listAsistencia->horaSalida }}</td>
+
+                              @foreach($Personas as $Persona)
+                                @if (  $Persona->id == $listAsistencia->id_persona )
                                   <td >{{ $Persona->nombre }}</td>
                                 @endif
                               @endforeach
-
-                              <td >{{ $Ch_B->fechaInicio }}</td>
-                              @if (  $Ch_B->fechaFin == '' )
-                                  <td >{{ __('Vigente') }} </td>
-                              @else
-                                  <td >{{ $Ch_B->fechaFin }}</td>
-                              @endif                              
 
                               <td>
                                 <a class="btn btn-success btn-sm" title="Ver"

@@ -14,7 +14,8 @@ class GestionarCargos extends Controller
     }
 
     public function create()  {
-        return view('cargos/create');        
+        $m = count(Cargos::all());
+        return view('cargos/create', ["n"=>$m]);        
     }
 
     public function store(Request $request)

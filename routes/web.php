@@ -23,10 +23,6 @@ Route::get('/Reg_PunstosDeControl', function () {
     return view('puntos de control/create');
 });
 
-Route::get('/Reg_Persona', function () {
-    return view('personal/create');
-});
-
 // Cargo
 Route::get('reg_Cargo', 'GestionarCargos@create');
 Route::post('guardarCargo', 'GestionarCargos@store');
@@ -44,7 +40,20 @@ Route::post('guardarBus', 'GestionarBuses@store');
 Route::get('listaBuses', 'GestionarBuses@index');
 
 // Bus - Chofer
-Route::get('Asig_Bus=Chofer', 'GestionarBuses@create');
-Route::post('guardarAsignacion', 'GestionarBuses@store');
-Route::get('listaAsignacines', 'GestionarBuses@index');
+Route::get('Asig_Bus=Chofer', 'Asignaciones_Bus_Chofer@create');
+Route::post('guardarAsignacion', 'Asignaciones_Bus_Chofer@store');
+Route::get('listaAsignacines', 'Asignaciones_Bus_Chofer@index');
 
+// Asistencia
+Route::get('marcarEntrada', 'MarcarAsistencia@entrada');
+Route::get('marcarSalida', 'MarcarAsistencia@salida');
+Route::post('guardarMarcacion', 'MarcarAsistencia@storeIn');
+Route::get('reporteAsistencias', 'MarcarAsistencia@index');
+
+// Rol de Partida
+Route::get('enlistar/{id}', 'RolDePartidas@store');
+Route::get('rolDePartidas', 'RolDePartidas@index');
+
+
+// Rol de Partida
+Route::get('reg_PuntoDeControl', 'GestionarPuntos_de_controles@create');
